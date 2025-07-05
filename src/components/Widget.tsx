@@ -1,5 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import useClipboard from "@/hooks/useClipboard";
 import useTimer from "@/hooks/useTimer";
 import {

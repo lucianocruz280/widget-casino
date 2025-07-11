@@ -67,8 +67,24 @@ const Widget = () => {
   }, []);
 
   useEffect(() => {
-    const handler = (event: MessageEvent<{ type: string; payload?: any }>) => {
-      console.log(event);
+    if (localStorage.getItem("acc")) {
+      setiduser(localStorage.getItem("acc"));
+    }
+  }, []);
+
+  useEffect(() => {
+    const handler = (
+      event: MessageEvent<{ tipo: "login" | "logout"; usuario: string }>
+    ) => {
+      if (event.data.tipo == "login") {
+        const { usuario } = event.data;
+        setiduser(usuario);
+        localStorage.setItem("acc", usuario);
+      }
+      if (event.data.tipo == "logout") {
+        setiduser(null);
+        localStorage.removeItem("acc");
+      }
     };
     window.addEventListener("message", handler);
     return () => window.removeEventListener("message", handler);
@@ -79,7 +95,7 @@ const Widget = () => {
     try {
       const res = await api.post(`/disruptive/create-transaction-casino`, {
         amount,
-        userid: "dasd123455",
+        userid: iduser,
       });
 
       if (res.status == 201 && res.data) {
@@ -234,18 +250,20 @@ const Widget = () => {
           )}
         </ModalContent>
       </Modal>
-      <Tooltip content="Recargar créditos" isOpen={isOpenTooltip}>
-        <Image
-          onClick={onOpen}
-          src="/coin.png"
-          alt="Reload"
-          className="bg-white shadow-lg border-1 border-gray-300 cursor-pointer rounded-full p-2 object-cover hover:brightness-70"
-          width={60}
-          height={60}
-          onMouseEnter={() => setIsOpenTooltip(true)}
-          onMouseLeave={() => setIsOpenTooltip(false)}
-        />
-      </Tooltip>
+      {iduser && (
+        <Tooltip content="Recargar créditos" isOpen={isOpenTooltip}>
+          <Image
+            onClick={onOpen}
+            src="/coin.png"
+            alt="Reload"
+            className="bg-white shadow-lg border-1 border-gray-300 cursor-pointer rounded-full p-2 object-cover hover:brightness-70"
+            width={60}
+            height={60}
+            onMouseEnter={() => setIsOpenTooltip(true)}
+            onMouseLeave={() => setIsOpenTooltip(false)}
+          />
+        </Tooltip>
+      )}
     </div>
   );
 };

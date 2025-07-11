@@ -30,6 +30,8 @@ const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
+const LOCALSTORAGE_ACC = "acc"
+
 const Widget = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [amount, setAmount] = useState("");
@@ -66,8 +68,8 @@ const Widget = () => {
   }, []);
 
   useEffect(() => {
-    if (localStorage.getItem("acc")) {
-      setiduser(localStorage.getItem("acc"));
+    if (localStorage.getItem(LOCALSTORAGE_ACC)) {
+      setiduser(localStorage.getItem(LOCALSTORAGE_ACC));
     }
   }, []);
 
@@ -78,11 +80,11 @@ const Widget = () => {
       if (event.data.tipo == "login") {
         const { usuario } = event.data;
         setiduser(usuario);
-        localStorage.setItem("acc", usuario);
+        localStorage.setItem(LOCALSTORAGE_ACC, usuario);
       }
       if (event.data.tipo == "logout") {
         setiduser(null);
-        localStorage.removeItem("acc");
+        localStorage.removeItem(LOCALSTORAGE_ACC);
       }
     };
     window.addEventListener("message", handler);

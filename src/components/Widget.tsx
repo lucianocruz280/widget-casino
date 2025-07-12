@@ -1,4 +1,3 @@
-
 import useClipboard from "@/hooks/useClipboard";
 import useTimer from "@/hooks/useTimer";
 import {
@@ -30,7 +29,7 @@ const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
-const LOCALSTORAGE_ACC = "acc"
+const LOCALSTORAGE_ACC = "acc";
 
 const Widget = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -156,7 +155,7 @@ const Widget = () => {
   }, []);
 
   return (
-    <div className="absolute bottom-4 right-12 text-white">
+    <>
       <Modal backdrop="blur" isOpen={isOpen} onClose={onClose}>
         <ModalContent>
           {(onClose) => (
@@ -251,21 +250,23 @@ const Widget = () => {
           )}
         </ModalContent>
       </Modal>
-      {iduser && (
-        <Tooltip content="Recargar créditos" isOpen={isOpenTooltip}>
-          <Image
-            onClick={onOpen}
-            src="/coin.png"
-            alt="Reload"
-            className="bg-white shadow-lg border-1 border-gray-300 cursor-pointer rounded-full p-2 object-cover hover:brightness-70"
-            width={60}
-            height={60}
-            onMouseEnter={() => setIsOpenTooltip(true)}
-            onMouseLeave={() => setIsOpenTooltip(false)}
-          />
-        </Tooltip>
-      )}
-    </div>
+      <div className="absolute bottom-4 right-12 text-white">
+        {iduser && (
+          <Tooltip content="Recargar créditos" isOpen={isOpenTooltip}>
+            <Image
+              onClick={onOpen}
+              src="/coin.png"
+              alt="Reload"
+              className="bg-white shadow-lg border-1 border-gray-300 cursor-pointer rounded-full p-2 object-cover hover:brightness-70"
+              width={60}
+              height={60}
+              onMouseEnter={() => setIsOpenTooltip(true)}
+              onMouseLeave={() => setIsOpenTooltip(false)}
+            />
+          </Tooltip>
+        )}
+      </div>
+    </>
   );
 };
 

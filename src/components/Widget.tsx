@@ -25,7 +25,6 @@ interface Qr {
   amount: number;
 }
 
-
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
@@ -251,8 +250,8 @@ const Widget = () => {
           )}
         </ModalContent>
       </Modal>
-      <div className="absolute bottom-4 right-12 text-white">
-        {iduser && (
+      {iduser && (
+        <div className="fixed bottom-30 right-4 md:bottom-4 md:right-12 text-white z-100">
           <Tooltip content="Recargar créditos" isOpen={isOpenTooltip}>
             <Image
               onClick={onOpen}
@@ -265,8 +264,8 @@ const Widget = () => {
               onMouseLeave={() => setIsOpenTooltip(false)}
             />
           </Tooltip>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 };

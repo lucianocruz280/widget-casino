@@ -7,7 +7,7 @@ export default function Home() {
       <Toaster />
       <Widget />
       <iframe src="https://dota.click" className="h-full w-full" />
-      
+    
     </div>
   );
 }
